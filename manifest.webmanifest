@@ -1,0 +1,10 @@
+{
+  "name": "Shiny Head Card Party",
+  "short_name": "Shiny Head",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "background_color": "#fff8df",
+  "theme_color": "#f8e15c",
+  "orientation": "any",
+  "icons": []
+}

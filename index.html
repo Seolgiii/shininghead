@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#f8e15c" />
+    <title>Shiny Head Card Party</title>
+    <link rel="icon" href="data:," />
+    <script src="https://game-cdn.poki.com/scripts/v2/poki-sdk.js"></script>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell" aria-live="polite">
+      <div id="effect-layer" class="effect-layer" aria-hidden="true">
+        <div id="effect-text" class="effect-text"></div>
+      </div>
+
+      <div id="reward-reveal" class="reward-reveal hidden" aria-live="polite">
+        <div id="reward-reveal-card" class="reward-reveal-card"></div>
+      </div>
+
+      <div id="card-detail-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+        <div class="modal-card">
+          <button id="detail-close-button" class="icon-button modal-close" type="button" aria-label="Close card detail">X</button>
+          <div id="detail-body"></div>
+        </div>
+      </div>
+
+      <div id="rates-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="rates-title">
+        <div class="modal-card">
+          <button id="rates-close-button" class="icon-button modal-close" type="button" aria-label="Close rates">X</button>
+          <div class="rates-body">
+            <p class="mode-label" data-i18n="ratesKicker">Gacha Rates</p>
+            <h2 id="rates-title" data-i18n="ratesTitle">Drop Rate</h2>
+            <div class="rate-grid modal-rates" aria-label="Gacha rates">
+              <span>SSS 1%</span>
+              <span>SS 3%</span>
+              <span>S 6%</span>
+              <span>A 12%</span>
+              <span>B 18%</span>
+              <span>C 25%</span>
+              <span>D 35%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+        <div class="modal-card settings-card">
+          <button id="settings-close-button" class="icon-button modal-close" type="button" aria-label="Close settings">X</button>
+          <div class="settings-body">
+            <p class="mode-label" data-i18n="settingsKicker">Settings</p>
+            <h2 id="settings-title" data-i18n="settingsTitle">Game Settings</h2>
+            <label class="settings-row" for="language-select">
+              <span data-i18n="languageLabel">Language</span>
+              <select id="language-select" aria-label="Language">
+                <option value="en">English</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+              </select>
+            </label>
+            <label class="settings-row toggle-row" for="sound-toggle">
+              <span data-i18n="soundLabel">Sound</span>
+              <input id="sound-toggle" type="checkbox" checked />
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <section id="home-screen" class="screen screen-active">
+        <div class="brand-row">
+          <div class="brand-mark" aria-hidden="true">SH</div>
+          <div class="brand-tools">
+            <button id="settings-button" class="icon-button" type="button" aria-label="Settings">⚙</button>
+            <div class="currency-pill" aria-label="Shine points">
+              <span class="coin-dot" aria-hidden="true"></span>
+              <strong id="currency-value">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-stage">
+          <div class="shine-ring"></div>
+          <div class="hero-crowd" aria-hidden="true">
+            <span class="crowd-head happy" style="--x: 4%; --y: 4%; --s: 58px; --r: -18deg; --skin: #ffd1a3; --delay: 0ms"></span>
+            <span class="crowd-head wow" style="--x: 24%; --y: 0%; --s: 74px; --r: 9deg; --skin: #ffe0bd; --delay: 120ms"></span>
+            <span class="crowd-head sleepy" style="--x: 52%; --y: 2%; --s: 54px; --r: -7deg; --skin: #ffc2b3; --delay: 60ms"></span>
+            <span class="crowd-head happy" style="--x: 74%; --y: 6%; --s: 82px; --r: 15deg; --skin: #f7c097; --delay: 180ms"></span>
+            <span class="crowd-head wow" style="--x: 0%; --y: 25%; --s: 86px; --r: 8deg; --skin: #ffd8a8; --delay: 90ms"></span>
+            <span class="crowd-head happy" style="--x: 18%; --y: 22%; --s: 50px; --r: -24deg; --skin: #f0b992; --delay: 260ms"></span>
+            <span class="crowd-head sleepy" style="--x: 36%; --y: 18%; --s: 92px; --r: 3deg; --skin: #ffd7c4; --delay: 40ms"></span>
+            <span class="crowd-head wow" style="--x: 64%; --y: 25%; --s: 48px; --r: -17deg; --skin: #ffe3af; --delay: 220ms"></span>
+            <span class="crowd-head happy" style="--x: 84%; --y: 27%; --s: 64px; --r: 21deg; --skin: #ffc9a1; --delay: 300ms"></span>
+            <span class="crowd-head sleepy" style="--x: 8%; --y: 50%; --s: 62px; --r: -5deg; --skin: #f5b88d; --delay: 160ms"></span>
+            <span class="crowd-head wow" style="--x: 26%; --y: 48%; --s: 80px; --r: 18deg; --skin: #ffcfb0; --delay: 20ms"></span>
+            <span class="crowd-head happy" style="--x: 52%; --y: 45%; --s: 56px; --r: -28deg; --skin: #ffe1c8; --delay: 210ms"></span>
+            <span class="crowd-head sleepy" style="--x: 72%; --y: 48%; --s: 90px; --r: 6deg; --skin: #ffc09c; --delay: 70ms"></span>
+            <span class="crowd-head happy" style="--x: -3%; --y: 73%; --s: 76px; --r: 19deg; --skin: #ffd9bd; --delay: 330ms"></span>
+            <span class="crowd-head wow" style="--x: 20%; --y: 76%; --s: 52px; --r: -11deg; --skin: #fac7a7; --delay: 110ms"></span>
+            <span class="crowd-head happy" style="--x: 42%; --y: 71%; --s: 88px; --r: -4deg; --skin: #ffc7b7; --delay: 250ms"></span>
+            <span class="crowd-head sleepy" style="--x: 68%; --y: 78%; --s: 58px; --r: 24deg; --skin: #ffe5b8; --delay: 140ms"></span>
+            <span class="crowd-head wow" style="--x: 88%; --y: 70%; --s: 72px; --r: -15deg; --skin: #efb58f; --delay: 280ms"></span>
+            <span class="crowd-head happy" style="--x: 12%; --y: 8%; --s: 38px; --r: 22deg; --skin: #ffe0c6; --delay: 360ms"></span>
+            <span class="crowd-head sleepy" style="--x: 43%; --y: 8%; --s: 44px; --r: -19deg; --skin: #f7bfa2; --delay: 310ms"></span>
+            <span class="crowd-head wow" style="--x: 90%; --y: 12%; --s: 46px; --r: -31deg; --skin: #ffd3a6; --delay: 390ms"></span>
+            <span class="crowd-head happy" style="--x: 13%; --y: 38%; --s: 42px; --r: 31deg; --skin: #ffc1a8; --delay: 430ms"></span>
+            <span class="crowd-head wow" style="--x: 47%; --y: 34%; --s: 40px; --r: -15deg; --skin: #ffe4ba; --delay: 470ms"></span>
+            <span class="crowd-head sleepy" style="--x: 78%; --y: 37%; --s: 38px; --r: 12deg; --skin: #f3b68e; --delay: 520ms"></span>
+            <span class="crowd-head happy" style="--x: 3%; --y: 63%; --s: 44px; --r: -27deg; --skin: #ffd2bf; --delay: 410ms"></span>
+            <span class="crowd-head wow" style="--x: 33%; --y: 64%; --s: 36px; --r: 28deg; --skin: #ffd8a8; --delay: 560ms"></span>
+            <span class="crowd-head sleepy" style="--x: 59%; --y: 66%; --s: 42px; --r: -22deg; --skin: #ffcbae; --delay: 610ms"></span>
+            <span class="crowd-head happy" style="--x: 83%; --y: 88%; --s: 40px; --r: 9deg; --skin: #ffe0bc; --delay: 660ms"></span>
+          </div>
+          <div class="hero-head" aria-hidden="true">
+            <span class="eyebrow left"></span>
+            <span class="eyebrow right"></span>
+            <span class="eye left"></span>
+            <span class="eye right"></span>
+            <span class="mouth"></span>
+            <span class="spark s1"></span>
+            <span class="spark s2"></span>
+            <span class="spark s3"></span>
+          </div>
+        </div>
+
+        <div class="home-copy">
+          <p class="kicker" data-i18n="kicker">Flip, bank, and outshine the rival.</p>
+          <h1>Shiny Head<br />Card Party</h1>
+        </div>
+
+        <section class="mission-panel home-missions" aria-label="Missions">
+          <div class="mission-panel-title">
+            <span data-i18n="quickGoals">Quick Goals</span>
+            <strong data-i18n="earnPulls">Earn pulls faster</strong>
+          </div>
+          <div id="mission-list" class="mission-list"></div>
+        </section>
+
+        <div class="home-actions">
+          <div class="vs-actions" aria-label="CPU battle difficulty">
+            <button class="secondary-button vs-button" data-vs="easy" data-i18n="easyMode" type="button">Shiny Head</button>
+            <button class="secondary-button vs-button" data-vs="normal" data-i18n="normalMode" type="button">Shinier Head</button>
+            <button class="secondary-button vs-button" data-vs="hard" data-i18n="hardMode" type="button">Blinding Head</button>
+          </div>
+          <button id="collection-button" class="primary-button" data-i18n="collectionButton" type="button">Collection</button>
+          <button id="deck-button" class="secondary-button" data-i18n="deckButton" type="button">Deck Builder</button>
+          <button id="shop-button" class="secondary-button" data-i18n="shopButton" type="button">Shop / Gacha</button>
+        </div>
+      </section>
+
+      <section id="shop-screen" class="screen">
+        <header class="collection-header">
+          <button id="shop-back-button" class="icon-button" type="button" aria-label="Back to menu">M</button>
+          <div>
+            <p class="mode-label" data-i18n="shopKicker">Shine Shop</p>
+            <h2 data-i18n="shopTitle">Gacha Lab</h2>
+          </div>
+          <button id="rates-button" class="icon-button" type="button" aria-label="Show gacha rates">%</button>
+          <div class="currency-pill compact" aria-label="Shine points">
+            <span class="coin-dot" aria-hidden="true"></span>
+            <strong id="shop-currency-value">0</strong>
+          </div>
+        </header>
+
+        <section class="shop-panel">
+          <div class="shop-copy">
+            <p class="mode-label" data-i18n="capsuleKicker">Head Capsule</p>
+            <h2 data-i18n="pullPrice">10 Points per Pull</h2>
+            <span data-i18n="duplicateCopy">Duplicates are useful: every 10 copies of a head unlocks a cosmetic decoration.</span>
+          </div>
+          <div class="gacha-actions">
+            <button id="pull-one-button" class="primary-button price-button" type="button"><span data-i18n="pullOne">Pull 1</span> <span class="coin-dot small"></span> 10</button>
+            <button id="pull-ten-button" class="secondary-button price-button" type="button"><span data-i18n="pullTen">Pull 10</span> <span class="coin-dot small"></span> 100</button>
+          </div>
+        </section>
+
+        <section class="gacha-results">
+          <div class="deck-builder-copy">
+            <p class="mode-label" data-i18n="resultsKicker">Results</p>
+            <h2 data-i18n="capsuleDrop">Capsule Drop</h2>
+            <span id="gacha-status">Win battles to earn points, then pull new heads here.</span>
+          </div>
+          <div id="gacha-grid" class="gacha-grid" aria-label="Gacha results"></div>
+        </section>
+      </section>
+
+      <section id="collection-screen" class="screen">
+        <header class="collection-header">
+          <button id="collection-back-button" class="icon-button" type="button" aria-label="Back to menu">M</button>
+          <div>
+            <p class="mode-label" data-i18n="dexKicker">Head Dex</p>
+            <h2 data-i18n="collectionTitle">Collection</h2>
+          </div>
+        </header>
+
+        <div class="collection-summary">
+          <strong id="collection-count">0/100</strong>
+          <span id="collection-hint">Win CPU battles to reveal silhouettes.</span>
+        </div>
+
+        <div id="collection-grid" class="collection-grid" aria-label="Head card collection"></div>
+      </section>
+
+      <section id="deck-screen" class="screen">
+        <header class="collection-header">
+          <button id="deck-back-button" class="icon-button" type="button" aria-label="Back to menu">M</button>
+          <div>
+            <p class="mode-label" data-i18n="battleDeckKicker">Battle Deck</p>
+            <h2 data-i18n="deckTitle">Deck Builder</h2>
+          </div>
+          <strong id="deck-count-pill" class="deck-count-pill">0/18</strong>
+        </header>
+
+        <section class="deck-builder">
+          <div class="deck-builder-copy">
+            <p class="mode-label" data-i18n="customDeck">Custom Deck</p>
+            <h2 data-i18n="yourHeads">Your 18 Heads</h2>
+            <span id="deck-builder-status">Starter deck ready.</span>
+          </div>
+          <div id="deck-preview" class="deck-preview" aria-label="Current battle deck"></div>
+          <div class="deck-actions">
+            <button id="auto-deck-button" class="secondary-button" data-i18n="autoFill" type="button">Auto Fill</button>
+            <button id="clear-deck-button" class="secondary-button" data-i18n="clear" type="button">Clear</button>
+          </div>
+        </section>
+
+        <section class="deck-pool-panel">
+          <div class="deck-builder-copy">
+            <p class="mode-label" data-i18n="availableHeads">Available Heads</p>
+            <h2 data-i18n="collectionPool">Collection Pool</h2>
+            <span id="deck-pool-status">Tap a collected head to add it. Tap a deck chip to remove it.</span>
+          </div>
+          <div id="deck-pool-grid" class="collection-grid deck-pool-grid" aria-label="Deck building card pool"></div>
+        </section>
+      </section>
+
+      <section id="game-screen" class="screen">
+        <header class="game-header">
+          <button id="back-button" class="icon-button" type="button" aria-label="Back to menu">M</button>
+          <div>
+            <p id="mode-label" class="mode-label">VS CPU</p>
+            <h2 id="game-title">Best of 3 Duel</h2>
+          </div>
+          <button id="restart-button" class="icon-button" type="button" aria-label="Restart match">R</button>
+        </header>
+
+        <div class="scoreboard">
+          <div>
+            <span id="round-label" data-i18n="round">Round</span>
+            <strong id="round-value">1/3</strong>
+          </div>
+          <div>
+            <span data-i18n="you">You</span>
+            <strong id="score-value">0</strong>
+          </div>
+          <div id="cpu-panel">
+            <span>CPU</span>
+            <strong id="cpu-score-value">0</strong>
+          </div>
+          <div>
+            <span id="deck-label" data-i18n="decks">Decks</span>
+            <strong id="deck-count">18/18</strong>
+          </div>
+        </div>
+
+        <div class="shine-meter">
+          <div class="meter-label">
+            <span id="shine-owner">Your Shine</span>
+            <strong id="multiplier-value">x1</strong>
+          </div>
+          <div class="meter-track">
+            <i id="shine-bar"></i>
+          </div>
+        </div>
+
+        <div class="table-area">
+          <div id="battle-flash" class="battle-flash hidden" aria-live="polite">
+            <strong id="battle-flash-title">SHINE HIT</strong>
+            <span id="battle-flash-copy">The table is heating up.</span>
+          </div>
+          <div id="cpu-hand" class="hand-strip cpu-hand" aria-label="CPU hidden hand"></div>
+          <div id="player-hand" class="hand-strip player-hand-zone" aria-label="Your open hand"></div>
+          <div id="duel-board" class="duel-board">
+            <div id="player-lane" class="duel-lane player-lane active-lane">
+              <div class="lane-top">
+                <span data-i18n="you">You</span>
+                <strong id="player-pot">Pot 0</strong>
+              </div>
+              <button id="player-card-button" class="card-stack" type="button" aria-label="Flip your card">
+                <div id="player-card-face" class="card-face card-back">
+                  <div class="card-pattern">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+              </button>
+              <div class="lane-stats">
+                <span id="player-bank">Bank 0</span>
+                <span id="player-status">Ready</span>
+              </div>
+            </div>
+
+            <div id="duel-core" class="duel-core">
+              <span id="duel-round" class="round-badge">Round 1/3</span>
+              <div id="turn-beam" class="turn-beam">VS</div>
+              <p id="turn-status">Your turn</p>
+            </div>
+
+            <div id="cpu-lane" class="duel-lane cpu-lane">
+              <div class="lane-top">
+                <span id="cpu-name">CPU</span>
+                <strong id="cpu-pot">Pot 0</strong>
+              </div>
+              <button id="cpu-card-button" class="card-stack cpu-stack" type="button" aria-label="CPU deck" disabled>
+                <div id="cpu-card-face" class="card-face card-back">
+                  <div class="card-pattern">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+              </button>
+              <div class="lane-stats">
+                <span id="cpu-bank">Bank 0</span>
+                <span id="cpu-status">Waiting</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button id="flip-action" class="primary-button" data-i18n="flip" type="button">Flip</button>
+          <button id="bank-action" class="secondary-button" data-i18n="bank" type="button">Bank</button>
+        </div>
+
+        <div id="tutorial-panel" class="tutorial-panel hidden" aria-live="polite">
+          <strong id="tutorial-title">First shine lesson</strong>
+          <span id="tutorial-copy">Tap Flip to reveal a head.</span>
+        </div>
+
+        <div class="event-panel">
+          <p id="event-title">Flip or bank?</p>
+          <span id="event-copy">Build a risky pot, then bank before the Head King steals it.</span>
+        </div>
+      </section>
+
+      <section id="result-screen" class="screen">
+        <div class="result-card">
+          <p id="result-kicker" class="kicker">Duel complete</p>
+          <h2 id="result-title">Nice shine!</h2>
+          <div class="result-score">
+            <span id="final-score-label">Match Score</span>
+            <strong id="final-score">0-0</strong>
+          </div>
+          <p id="result-copy">You earned points from battle.</p>
+          <div id="result-mission-list" class="mission-list result-missions"></div>
+          <div class="reward-row">
+            <button id="reward-ad-button" class="primary-button" type="button">Watch Ad: 2x Points</button>
+            <button id="plain-restart-button" class="secondary-button" data-i18n="battleAgain" type="button">Battle Again</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./src/app.js"></script>
+  </body>
+</html>
